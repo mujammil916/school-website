@@ -1,0 +1,10 @@
+{
+  "name": "summer-academy-school-website",
+  "version": "1.0.0",
+  "description": "Full-stack school website — Summer Academy School Punjab",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
+  },
+  "dependencies": {}
+}

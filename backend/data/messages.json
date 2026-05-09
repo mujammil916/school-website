@@ -1,0 +1,18 @@
+{
+  "messages": [],
+  "admissions": [
+    {
+      "id": "ADM-1778312970903",
+      "studentName": "MD. Mujammil Ansari",
+      "parentName": "Fajal Hussain",
+      "email": "mdmujammilansari916@gmail.com",
+      "phone": "9102441402",
+      "grade": "Grade 12",
+      "dob": "2006-08-23",
+      "message": "",
+      "timestamp": "2026-05-09T07:49:30.903Z",
+      "status": "pending"
+    }
+  ],
+  "newsletter": []
+}
