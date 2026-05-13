@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summer Academy School Punjab – Your Gateway to Success</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===========================
+       CSS VARIABLES & RESET
+    =========================== */
+    :root {
+      --navy:    #0d1f40;
+      --royal:   #1a3a6e;
+      --blue:    #2456b4;
+      --gold:    #d4a017;
+      --gold-lt: #f5c842;
+      --cream:   #faf7f0;
+      --white:   #ffffff;
+      --gray:    #6b7080;
+      --light:   #f0f4fb;
+      --error:   #c0392b;
+      --success: #27ae60;
+      --shadow:  0 8px 40px rgba(13,31,64,0.13);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.7; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ===========================
+       TOAST NOTIFICATIONS
+    =========================== */
+    #toast-container {
+      position: fixed; top: 90px; right: 20px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 10px;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--navy); color: white;
+      padding: 14px 20px; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      max-width: 320px; pointer-events: all;
+      display: flex; align-items: center; gap: 10px;
+      animation: slideInRight 0.35s ease;
+      border-left: 4px solid var(--blue);
+    }
+    .toast.success { border-left-color: var(--success); }
+    .toast.error   { border-left-color: var(--error); }
+    .toast.fade-out { animation: fadeOut 0.4s ease forwards; }
+    @keyframes slideInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes fadeOut      { from { opacity:1; } to { opacity:0; transform:translateX(60px); } }
+
+    /* ===========================
+       HEADER
+    =========================== */
+    header {
+      position: sticky; top: 0; z-index: 999;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 70px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--white); line-height: 1.2; }
+    .logo-text span { color: var(--gold); }
+    nav ul { list-style: none; display: flex; gap: 0.25rem; }
+    nav a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 6px; transition: all 0.25s; }
+    nav a:hover { background: rgba(255,255,255,0.12); color: var(--gold-lt); }
+    .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; }
+    .nav-cta:hover { background: var(--gold-lt) !important; }
+    .menu-toggle { display: none; background: none; border: 2px solid rgba(255,255,255,0.4); color: white; font-size: 1.3rem; cursor: pointer; border-radius: 6px; padding: 0.3rem 0.6rem; transition: all 0.2s; }
+    .menu-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ===========================
+       HERO
+    =========================== */
+    #home {
+      min-height: 92vh;
+      background: linear-gradient(150deg,rgba(13,31,64,.9) 0%,rgba(26,58,110,.78) 60%,rgba(36,86,180,.6) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 800'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a3a6e'/%3E%3Cstop offset='100%25' stop-color='%232456b4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1400' height='800' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='180' fill='rgba(255,255,255,.04)'/%3E%3Ccircle cx='1200' cy='600' r='260' fill='rgba(255,255,255,.04)'/%3E%3Ccircle cx='700' cy='400' r='320' fill='rgba(212,160,23,.06)'/%3E%3C/svg%3E");
+      background-size: cover; background-position: center;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden;
+    }
+    .hero-shape { position: absolute; border-radius: 50%; opacity: .07; pointer-events: none; }
+    .hs1 { width:320px;height:320px;background:var(--gold);top:-80px;right:-80px;animation:float 8s ease-in-out infinite; }
+    .hs2 { width:200px;height:200px;background:white;bottom:60px;left:-60px;animation:float 8s 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-18px) scale(1.04)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-badge { display:inline-block; background:rgba(212,160,23,.18); border:1px solid rgba(212,160,23,.5); color:var(--gold-lt); font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.4rem 1.1rem; border-radius:30px; margin-bottom:1.4rem; animation:fadeUp .7s ease both; }
+    .hero-content h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,5.5vw,4rem); color:white; line-height:1.18; margin-bottom:1.2rem; animation:fadeUp .8s .1s ease both; }
+    .hero-content h1 em { color:var(--gold-lt); font-style:normal; }
+    .hero-content > p { font-size:1.15rem; color:rgba(255,255,255,.78); margin-bottom:2.2rem; animation:fadeUp .8s .2s ease both; }
+    .hero-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; animation:fadeUp .8s .3s ease both; }
+    #welcome-message { display:none; margin-top:1.6rem; background:rgba(212,160,23,.15); border:1px solid rgba(212,160,23,.4); color:var(--gold-lt); font-size:1.05rem; font-weight:500; padding:.9rem 1.5rem; border-radius:8px; }
+
+    .btn { padding:.8rem 2rem; border-radius:8px; font-size:.95rem; font-weight:600; cursor:pointer; border:none; transition:all .25s; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; font-family:inherit; }
+    .btn-gold { background:var(--gold); color:var(--navy); }
+    .btn-gold:hover { background:var(--gold-lt); transform:translateY(-2px); box-shadow:0 6px 20px rgba(212,160,23,.35); }
+    .btn-outline { background:transparent; color:white; border:2px solid rgba(255,255,255,.45); }
+    .btn-outline:hover { border-color:var(--gold-lt); color:var(--gold-lt); transform:translateY(-2px); }
+    .btn-blue { background:var(--blue); color:white; }
+    .btn-blue:hover { background:var(--navy); transform:translateY(-2px); box-shadow:0 6px 20px rgba(36,86,180,.35); }
+    .btn:disabled { opacity:.6; cursor:not-allowed; transform:none !important; }
+
+    /* Stats */
+    .stats-bar { background:white; box-shadow:var(--shadow); }
+    .stats-inner { max-width:1200px; margin:0 auto; padding:1.8rem 2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; text-align:center; }
+    .stat-item { border-right:1px solid #e8edf5; }
+    .stat-item:last-child { border-right:none; }
+    .stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:var(--blue); display:block; }
+    .stat-label { font-size:.82rem; color:var(--gray); font-weight:500; text-transform:uppercase; letter-spacing:.06em; }
+
+    /* ===========================
+       SHARED SECTION STYLES
+    =========================== */
+    section { padding:80px 2rem; }
+    .section-inner { max-width:1200px; margin:0 auto; }
+    .section-tag { display:inline-block; font-size:.75rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); background:rgba(36,86,180,.09); padding:.3rem .9rem; border-radius:20px; margin-bottom:.8rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.6rem); color:var(--navy); margin-bottom:1rem; line-height:1.25; }
+    .section-title span { color:var(--blue); }
+    .section-sub { color:var(--gray); font-size:1.05rem; max-width:560px; line-height:1.7; }
+    .divider { width:50px; height:4px; background:linear-gradient(90deg,var(--blue),var(--gold)); border-radius:2px; margin:1.2rem 0; }
+
+    /* ===========================
+       ABOUT
+    =========================== */
+    #about { background:white; }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .about-card-main { background:linear-gradient(135deg,var(--navy),var(--royal)); border-radius:20px; padding:3rem 2.5rem; color:white; position:relative; overflow:hidden; }
+    .about-card-main::before { content:'🎓'; font-size:8rem; position:absolute; right:-20px; bottom:-20px; opacity:.08; }
+    .about-card-main h3 { font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:1rem; }
+    .about-card-main p { font-size:.95rem; color:rgba(255,255,255,.78); line-height:1.7; }
+    .about-badge-float { position:absolute; bottom:-20px; right:30px; background:var(--gold); color:var(--navy); padding:.9rem 1.4rem; border-radius:12px; font-weight:700; font-size:.85rem; box-shadow:0 8px 24px rgba(212,160,23,.4); text-align:center; line-height:1.4; }
+    .about-badge-float span { font-size:1.4rem; display:block; }
+    .about-text p { color:var(--gray); margin-bottom:1.2rem; font-size:1rem; }
+    .about-features { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; }
+    .feature-chip { display:flex; align-items:center; gap:.6rem; font-size:.88rem; font-weight:500; color:var(--navy); background:var(--light); padding:.6rem 1rem; border-radius:8px; }
+
+    /* ===========================
+       COURSES
+    =========================== */
+    #courses { background:var(--light); }
+    .courses-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; flex-wrap:wrap; gap:1rem; }
+    .courses-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.8rem; }
+    .course-card { background:white; border-radius:16px; overflow:hidden; box-shadow:0 2px 16px rgba(13,31,64,.07); transition:all .3s; display:flex; flex-direction:column; }
+    .course-card:hover { transform:translateY(-8px); box-shadow:0 16px 40px rgba(13,31,64,.14); }
+    .course-card-top { padding:2rem 2rem 1.2rem; border-bottom:3px solid var(--blue); }
+    .course-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:1rem; }
+    .ic-science{background:rgba(36,86,180,.1)} .ic-math{background:rgba(39,174,96,.1)} .ic-lang{background:rgba(212,160,23,.1)} .ic-arts{background:rgba(192,57,43,.1)}
+    .course-card h3 { font-family:'Playfair Display',serif; font-size:1.18rem; color:var(--navy); margin-bottom:.6rem; }
+    .course-card p { color:var(--gray); font-size:.9rem; line-height:1.65; }
+    .course-card-bottom { padding:1.2rem 2rem; display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+    .course-meta { font-size:.8rem; color:var(--gray); }
+    .course-meta strong { color:var(--blue); }
+    .btn-sm { padding:.5rem 1.1rem; font-size:.82rem; border-radius:6px; background:var(--blue); color:white; border:none; cursor:pointer; font-weight:600; transition:all .2s; }
+    .btn-sm:hover { background:var(--navy); transform:scale(1.04); }
+
+    /* ===========================
+       ADMISSION SECTION
+    =========================== */
+    #admission { background:white; }
+    .admission-inner { max-width:760px; margin:0 auto; text-align:center; }
+    .admission-inner .section-title { font-size:2rem; }
+    .admission-form-wrap { background:var(--light); border-radius:20px; padding:2.5rem; margin-top:2.5rem; text-align:left; }
+    .form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+
+    /* ===========================
+       CONTACT
+    =========================== */
+    #contact { background:var(--light); }
+    .contact-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:4rem; align-items:start; }
+    .contact-info h3 { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--navy); margin-bottom:.8rem; }
+    .contact-info > p { color:var(--gray); font-size:.95rem; margin-bottom:2rem; }
+    .contact-detail { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.4rem; }
+    .cd-icon { width:42px; height:42px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .cd-text strong { display:block; font-size:.82rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.1rem; }
+    .cd-text span { font-size:.92rem; color:var(--navy); }
+
+    /* Form shared */
+    .form-group { margin-bottom:1.4rem; }
+    .form-group label { display:block; font-size:.85rem; font-weight:600; color:var(--navy); margin-bottom:.45rem; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width:100%; padding:.8rem 1.1rem; border:2px solid #dde3f0; border-radius:8px;
+      font-size:.95rem; font-family:inherit; background:white; color:var(--navy);
+      transition:border-color .2s,box-shadow .2s; appearance:none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(36,86,180,.12); }
+    .form-group.error input,
+    .form-group.error textarea,
+    .form-group.error select { border-color:var(--error); background:#fff5f5; }
+    .form-group textarea { resize:vertical; min-height:130px; }
+    .error-msg { display:none; color:var(--error); font-size:.8rem; margin-top:.3rem; font-weight:500; }
+    .error-msg.show { display:block; }
+    .contact-form-wrap { background:white; border-radius:20px; padding:2.5rem; box-shadow:var(--shadow); }
+    .submit-btn {
+      width:100%; background:linear-gradient(135deg,var(--blue),var(--navy));
+      color:white; padding:.9rem; border:none; border-radius:8px;
+      font-size:1rem; font-weight:600; cursor:pointer; transition:all .25s;
+      font-family:inherit; display:flex; align-items:center; justify-content:center; gap:.5rem;
+    }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(36,86,180,.35); }
+    .submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+    .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,.4); border-top-color:white; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .success-banner { display:none; background:#eafaf1; border:1px solid #a9dfbf; color:var(--success); padding:1rem 1.2rem; border-radius:8px; font-weight:500; margin-bottom:1.4rem; font-size:.95rem; gap:.6rem; align-items:center; }
+    .success-banner.show { display:flex; animation:fadeUp .35s ease; }
+    .ref-id { font-family:monospace; font-size:.82rem; color:var(--blue); background:rgba(36,86,180,.08); padding:.2rem .5rem; border-radius:4px; margin-top:.3rem; display:block; }
+
+    /* ===========================
+       NEWSLETTER STRIP
+    =========================== */
+    .newsletter-strip { background:linear-gradient(135deg,var(--navy),var(--royal)); padding:60px 2rem; }
+    .newsletter-inner { max-width:680px; margin:0 auto; text-align:center; }
+    .newsletter-inner h2 { font-family:'Playfair Display',serif; font-size:2rem; color:white; margin-bottom:.8rem; }
+    .newsletter-inner p { color:rgba(255,255,255,.72); margin-bottom:2rem; }
+    .newsletter-form { display:flex; gap:.8rem; max-width:480px; margin:0 auto; }
+    .newsletter-form input { flex:1; padding:.85rem 1.2rem; border:2px solid rgba(255,255,255,.2); border-radius:8px; background:rgba(255,255,255,.1); color:white; font-size:.95rem; font-family:inherit; transition:border-color .2s; }
+    .newsletter-form input::placeholder { color:rgba(255,255,255,.5); }
+    .newsletter-form input:focus { outline:none; border-color:var(--gold); }
+    .newsletter-form button { background:var(--gold); color:var(--navy); border:none; padding:.85rem 1.6rem; border-radius:8px; font-weight:700; cursor:pointer; font-family:inherit; transition:all .25s; white-space:nowrap; }
+    .newsletter-form button:hover { background:var(--gold-lt); }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer { background:var(--navy); color:rgba(255,255,255,.7); padding:3rem 2rem 2rem; }
+    .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.1); }
+    .footer-brand p { font-size:.88rem; margin-top:1rem; line-height:1.7; max-width:280px; }
+    .footer-col h4 { color:white; font-size:.85rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:1.1rem; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:.55rem; }
+    .footer-col ul li a { color:rgba(255,255,255,.6); text-decoration:none; font-size:.88rem; transition:color .2s; }
+    .footer-col ul li a:hover { color:var(--gold-lt); }
+    .footer-bottom { max-width:1200px; margin:0 auto; padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8rem; font-size:.82rem; }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media(max-width:900px){
+      .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
+      .about-badge-float{position:static;margin-top:1.5rem;display:inline-block}
+      .footer-inner{grid-template-columns:1fr 1fr}
+      .stats-inner{grid-template-columns:1fr 1fr}
+      .stat-item{border-right:none;border-bottom:1px solid #e8edf5;padding-bottom:1rem}
+      .stat-item:nth-child(odd){border-right:1px solid #e8edf5}
+    }
+    @media(max-width:650px){
+      nav ul{display:none;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:var(--navy);padding:1rem 2rem 1.5rem;gap:.3rem;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+      nav ul.open{display:flex}
+      .menu-toggle{display:block}
+      .about-features,.form-row2{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr;gap:2rem}
+      .footer-bottom{flex-direction:column;text-align:center}
+      .hero-actions{flex-direction:column;align-items:center}
+      .newsletter-form{flex-direction:column}
+      .courses-header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ===========================
+     HEADER
+=========================== -->
+<header>
+  <div class="header-inner">
+    <a href="#home" class="logo">
+      <div class="logo-icon">🎓</div>
+      <div class="logo-text">Summer Academy<br><span>School Punjab</span></div>
+    </a>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#admission">Admission</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#admission" class="nav-cta">Apply Now</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+  </div>
+</header>
+
+<!-- ===========================
+     HERO
+=========================== -->
+<section id="home">
+  <div class="hero-shape hs1"></div>
+  <div class="hero-shape hs2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Excellence in Education Since 2005</div>
+    <h1>Welcome to <em>Summer Academy</em><br>School Punjab</h1>
+    <p>Your Gateway to Success and Excellence in Education.<br>Empowering young minds for a brighter tomorrow.</p>
+    <div class="hero-actions">
+      <a href="#admission" class="btn btn-gold">Apply for Admission →</a>
+      <a href="#courses" class="btn btn-outline">Explore Courses</a>
+      <button class="btn btn-outline" id="welcome-btn">✨ Special Message</button>
+    </div>
+    <div id="welcome-message">
+      🎉 Welcome to our school! We're thrilled to have you here. Your journey to excellence starts today!
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="stat-num">1,200+</span><span class="stat-label">Students Enrolled</span></div>
+    <div class="stat-item"><span class="stat-num">85+</span><span class="stat-label">Expert Faculty</span></div>
+    <div class="stat-item"><span class="stat-num">20+</span><span class="stat-label">Courses Offered</span></div>
+    <div class="stat-item"><span class="stat-num">98%</span><span class="stat-label">Success Rate</span></div>
+  </div>
+</div>
+
+<!-- ===========================
+     ABOUT
+=========================== -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div style="position:relative;">
+        <div class="about-card-main">
+          <h3>A Legacy of Learning</h3>
+          <p>Summer Academy School Punjab has been nurturing excellence for over two decades. Our campus, passionate educators, and holistic curriculum have made us one of Punjab's most respected institutions.</p>
+        </div>
+        <div class="about-badge-float"><span>🏆</span>Best School<br>Award 2024</div>
+      </div>
+      <div class="about-text" style="padding-bottom:1.5rem">
+        <div class="section-tag">About Us</div>
+        <h2 class="section-title">Shaping <span>Future Leaders</span> with Purpose</h2>
+        <div class="divider"></div>
+        <p>We are a leading educational institution dedicated to providing quality education and fostering the development of well-rounded students, committed to academic excellence and character development.</p>
+        <p>Our experienced faculty members mentor students to achieve their full potential in a supportive learning environment where every student can thrive.</p>
+        <p>With modern teaching methods and cutting-edge facilities, we prepare students for tomorrow's challenges while instilling values of integrity and social responsibility.</p>
+        <div class="about-features">
+          <div class="feature-chip">📚 Modern Library</div>
+          <div class="feature-chip">🔬 Science Labs</div>
+          <div class="feature-chip">💻 Computer Lab</div>
+          <div class="feature-chip">🏟️ Sports Facilities</div>
+          <div class="feature-chip">🎨 Art Studio</div>
+          <div class="feature-chip">🌿 Green Campus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     COURSES
+=========================== -->
+<section id="courses">
+  <div class="section-inner">
+    <div class="courses-header">
+      <div>
+        <div class="section-tag">What We Offer</div>
+        <h2 class="section-title">Our <span>Featured Courses</span></h2>
+        <div class="divider"></div>
+      </div>
+      <p class="section-sub">Carefully designed curricula that inspire curiosity and build real-world skills.</p>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-card-top">
+          <div class="course-icon ic-science">🔬</div>
+          <h3>Science & Technology</h3>
+          <p>Explore wonders through hands-on experiments and modern labs. Covers physics, chemistry, and biology in an interactive environment.</p>
+        </div>
+        <div class="course-card-bottom"><div class="course-meta">Duration: <strong>1 Year</strong></div><button class="btn-sm" onclick="scrollTo('#admission')">Apply Now</button></div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-top">
+          <div class="course-icon ic-math">🔢</div>
+          <h3>Mathematics & Logic</h3>
+          <p>Develop problem-solving skills covering arithmetic, algebra, geometry, and advanced mathematical concepts.</p>
+        </div>
+        <div class="course-card-bottom"><div class="course-meta">Duration: <strong>1 Year</strong></div><button class="btn-sm" onclick="scrollTo('#admission')">Apply Now</button></div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-top">
+          <div class="course-icon ic-lang">📖</div>
+          <h3>Languages & Literature</h3>
+          <p>Master English and other languages. Enhance communication through reading, writing, and literature study.</p>
+        </div>
+        <div class="course-card-bottom"><div class="course-meta">Duration: <strong>1 Year</strong></div><button class="btn-sm" onclick="scrollTo('#admission')">Apply Now</button></div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-top">
+          <div class="course-icon ic-arts">🎨</div>
+          <h3>Arts & Creativity</h3>
+          <p>Express yourself through drawing, painting, music, and dance. Develop creative thinking and artistic appreciation.</p>
+        </div>
+        <div class="course-card-bottom"><div class="course-meta">Duration: <strong>1 Year</strong></div><button class="btn-sm" onclick="scrollTo('#admission')">Apply Now</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     ADMISSION SECTION (NEW)
+=========================== -->
+<section id="admission">
+  <div class="section-inner">
+    <div class="admission-inner">
+      <div class="section-tag">Admissions Open</div>
+      <h2 class="section-title">Apply for <span>Admission</span></h2>
+      <div class="divider" style="margin:1.2rem auto;"></div>
+      <p class="section-sub" style="margin:0 auto;">Fill in the form below and our admissions team will contact you within 2–3 business days.</p>
+
+      <div class="admission-form-wrap">
+        <div class="success-banner" id="adm-success">
+          <span>✅</span>
+          <div>Admission enquiry submitted! We'll contact you soon.<br><span class="ref-id" id="adm-ref"></span></div>
+        </div>
+        <form id="admission-form" novalidate>
+          <div class="form-row2">
+            <div class="form-group">
+              <label for="studentName">Student Full Name *</label>
+              <input type="text" id="studentName" name="studentName" placeholder="Student's full name">
+              <div class="error-msg" id="studentName-error">Student name is required.</div>
+            </div>
+            <div class="form-group">
+              <label for="parentName">Parent / Guardian Name *</label>
+              <input type="text" id="parentName" name="parentName" placeholder="Parent's full name">
+              <div class="error-msg" id="parentName-error">Parent name is required.</div>
+            </div>
+          </div>
+          <div class="form-row2">
+            <div class="form-group">
+              <label for="adm-email">Email Address *</label>
+              <input type="email" id="adm-email" name="email" placeholder="your@email.com">
+              <div class="error-msg" id="adm-email-error">Valid email is required.</div>
+            </div>
+            <div class="form-group">
+              <label for="adm-phone">Phone Number *</label>
+              <input type="tel" id="adm-phone" name="phone" placeholder="+91 XXXXX XXXXX">
+              <div class="error-msg" id="adm-phone-error">Phone number is required.</div>
+            </div>
+          </div>
+          <div class="form-row2">
+            <div class="form-group">
+              <label for="grade">Grade / Class Applying For *</label>
+              <select id="grade" name="grade">
+                <option value="">Select grade…</option>
+                <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+                <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+                <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+                <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+              </select>
+              <div class="error-msg" id="grade-error">Please select a grade.</div>
+            </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth *</label>
+              <input type="date" id="dob" name="dob">
+              <div class="error-msg" id="dob-error">Date of birth is required.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="adm-message">Additional Information (optional)</label>
+            <textarea id="adm-message" name="message" placeholder="Any special requirements or questions…" style="min-height:90px"></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="adm-btn">
+            <div class="spinner" id="adm-spinner"></div>
+            <span id="adm-btn-text">Submit Admission Enquiry →</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     CONTACT
+=========================== -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">We'd Love to <span>Hear From You</span></h2>
+        <div class="divider"></div>
+        <p>Have general questions? Our team is happy to help.</p>
+        <div class="contact-detail">
+          <div class="cd-icon">📍</div>
+          <div class="cd-text"><strong>Address</strong><span>123 Education Street, Amritsar, Punjab</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">📞</div>
+          <div class="cd-text"><strong>Phone</strong><span>+91 (183) 123-4567</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">📧</div>
+          <div class="cd-text"><strong>Email</strong><span>info@summeracademypunjab.edu</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">🕐</div>
+          <div class="cd-text"><strong>Office Hours</strong><span>Mon – Sat: 8:00 AM – 4:00 PM</span></div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <div class="success-banner" id="contact-success">
+          <span>✅</span>
+          <div>Message sent! We'll reply within 1–2 business days.<br><span class="ref-id" id="contact-ref"></span></div>
+        </div>
+        <form id="contact-form" novalidate>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" placeholder="Your full name">
+              <div class="error-msg" id="name-error">Full name is required.</div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com">
+            <div class="error-msg" id="email-error">Valid email address is required.</div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" placeholder="Write your message here…"></textarea>
+            <div class="error-msg" id="message-error">Please enter a message (min 10 characters).</div>
+          </div>
+          <button type="submit" class="submit-btn" id="contact-btn">
+            <div class="spinner" id="contact-spinner"></div>
+            <span id="contact-btn-text">Send Message →</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     NEWSLETTER
+=========================== -->
+<div class="newsletter-strip">
+  <div class="newsletter-inner">
+    <h2>Stay Connected 📰</h2>
+    <p>Subscribe to receive school news, events, and admission updates directly in your inbox.</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" id="nl-email" placeholder="Enter your email address" required>
+      <button type="submit" id="nl-btn">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">🎓</div>
+        <div class="logo-text">Summer Academy<br><span>School Punjab</span></div>
+      </div>
+      <p>Dedicated to nurturing excellence, character, and lifelong learning in every student we serve.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#admission">Admission</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">123 Education Street</a></li>
+        <li><a href="#">Amritsar, Punjab</a></li>
+        <li><a href="#">+91 (183) 123-4567</a></li>
+        <li><a href="#">info@summeracademy.edu</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Summer Academy School Punjab. All rights reserved.</span>
+    <span>Built with ❤️ for Education</span>
+  </div>
+</footer>
+
+<!-- ===========================
+     JAVASCRIPT
+=========================== -->
+<script>
+  // ── CONFIG ────────────────────────────────
+  // When running locally with the Node.js server, set this to ''.
+  // For demo/standalone mode (no server), set to 'demo'.
+  const API_BASE = window.location.port === '3000' ? '' : 'demo';
+
+  // ── TOAST ─────────────────────────────────
+  function showToast(msg, type = 'default', duration = 5000) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    const icons = { success: '✅', error: '❌', default: 'ℹ️' };
+    t.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+    c.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('fade-out');
+      setTimeout(() => t.remove(), 400);
+    }, duration);
+  }
+
+  // ── MOBILE MENU ───────────────────────────
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu    = document.getElementById('nav-menu');
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+    menuToggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+  });
+  navMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => { navMenu.classList.remove('open'); menuToggle.textContent = '☰'; });
+  });
+
+  // ── SMOOTH SCROLL ─────────────────────────
+  function scrollTo(selector) {
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // ── WELCOME BUTTON ────────────────────────
+  let msgVisible = false;
+  document.getElementById('welcome-btn').addEventListener('click', function() {
+    msgVisible = !msgVisible;
+    const el = document.getElementById('welcome-message');
+    el.style.display = msgVisible ? 'block' : 'none';
+    this.textContent = msgVisible ? '✨ Hide Message' : '✨ Special Message';
+  });
+
+  // ── VALIDATION HELPERS ────────────────────
+  function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+  function setLoading(btnId, spinnerId, textId, loading) {
+    const btn = document.getElementById(btnId);
+    const sp  = document.getElementById(spinnerId);
+    const tx  = document.getElementById(textId);
+    btn.disabled = loading;
+    sp.style.display  = loading ? 'block' : 'none';
+    tx.style.opacity  = loading ? '.5' : '1';
+  }
+
+  function showFieldError(id, errId) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.parentElement.classList.add('error');
+      const err = document.getElementById(errId);
+      if (err) err.classList.add('show');
+    }
+  }
+
+  function resetForm(formId) {
+    const form = document.getElementById(formId);
+    form.reset();
+    form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+    form.querySelectorAll('.error-msg').forEach(m => m.classList.remove('show'));
+  }
+
+  // ── API CALL ──────────────────────────────
+  async function apiPost(endpoint, body) {
+    if (API_BASE === 'demo') {
+      // Simulate server response for demo/standalone mode
+      await new Promise(r => setTimeout(r, 1200));
+      return { success: true, message: 'Demo mode: Submission received (no server running).', referenceId: 'DEMO-' + Date.now() };
+    }
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    return res.json();
+  }
+
+  // ─────────────────────────────────────────
+  // CONTACT FORM
+  // ─────────────────────────────────────────
+  document.getElementById('contact-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    // Reset errors
+    document.getElementById('contact-form').querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+    document.getElementById('contact-form').querySelectorAll('.error-msg').forEach(m => m.classList.remove('show'));
+    document.getElementById('contact-success').classList.remove('show');
+
+    let valid = true;
+    if (!name)              { showFieldError('name', 'name-error'); valid = false; }
+    if (!isEmail(email))    { showFieldError('email', 'email-error'); valid = false; }
+    if (message.length < 10){ showFieldError('message', 'message-error'); valid = false; }
+    if (!valid) return;
+
+    setLoading('contact-btn', 'contact-spinner', 'contact-btn-text', true);
+    try {
+      const data = await apiPost('/api/contact', { name, email, phone, message });
+      if (data.success) {
+        document.getElementById('contact-success').classList.add('show');
+        document.getElementById('contact-ref').textContent = 'Ref: ' + (data.referenceId || '');
+        resetForm('contact-form');
+        showToast('Message sent successfully!', 'success');
+      } else {
+        const msg = data.errors?.[0]?.msg || data.message || 'Something went wrong. Please try again.';
+        showToast(msg, 'error');
+      }
+    } catch {
+      showToast('Network error. Please check your connection.', 'error');
+    } finally {
+      setLoading('contact-btn', 'contact-spinner', 'contact-btn-text', false);
+    }
+  });
+
+  // ─────────────────────────────────────────
+  // ADMISSION FORM
+  // ─────────────────────────────────────────
+  document.getElementById('admission-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const fields = {
+      studentName: document.getElementById('studentName').value.trim(),
+      parentName:  document.getElementById('parentName').value.trim(),
+      email:       document.getElementById('adm-email').value.trim(),
+      phone:       document.getElementById('adm-phone').value.trim(),
+      grade:       document.getElementById('grade').value,
+      dob:         document.getElementById('dob').value,
+      message:     document.getElementById('adm-message').value.trim()
+    };
+
+    document.getElementById('admission-form').querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+    document.getElementById('admission-form').querySelectorAll('.error-msg').forEach(m => m.classList.remove('show'));
+    document.getElementById('adm-success').classList.remove('show');
+
+    let valid = true;
+    if (!fields.studentName) { showFieldError('studentName', 'studentName-error'); valid = false; }
+    if (!fields.parentName)  { showFieldError('parentName', 'parentName-error');   valid = false; }
+    if (!isEmail(fields.email)) { showFieldError('adm-email', 'adm-email-error'); valid = false; }
+    if (!fields.phone)       { showFieldError('adm-phone', 'adm-phone-error');     valid = false; }
+    if (!fields.grade)       { showFieldError('grade', 'grade-error');             valid = false; }
+    if (!fields.dob)         { showFieldError('dob', 'dob-error');                 valid = false; }
+    if (!valid) return;
+
+    setLoading('adm-btn', 'adm-spinner', 'adm-btn-text', true);
+    try {
+      const data = await apiPost('/api/admission', fields);
+      if (data.success) {
+        document.getElementById('adm-success').classList.add('show');
+        document.getElementById('adm-ref').textContent = 'Ref: ' + (data.referenceId || '');
+        resetForm('admission-form');
+        showToast('Admission enquiry submitted!', 'success');
+        document.getElementById('adm-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        const msg = data.errors?.[0]?.msg || data.message || 'Something went wrong.';
+        showToast(msg, 'error');
+      }
+    } catch {
+      showToast('Network error. Please check your connection.', 'error');
+    } finally {
+      setLoading('adm-btn', 'adm-spinner', 'adm-btn-text', false);
+    }
+  });
+
+  // ─────────────────────────────────────────
+  // NEWSLETTER FORM
+  // ─────────────────────────────────────────
+  document.getElementById('newsletter-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = document.getElementById('nl-email').value.trim();
+    if (!isEmail(email)) { showToast('Please enter a valid email address.', 'error'); return; }
+
+    const btn = document.getElementById('nl-btn');
+    btn.disabled = true; btn.textContent = 'Subscribing…';
+    try {
+      const data = await apiPost('/api/newsletter', { email });
+      if (data.success) {
+        showToast(data.message || 'Subscribed successfully!', 'success');
+        document.getElementById('nl-email').value = '';
+      } else {
+        showToast(data.message || 'Subscription failed.', 'error');
+      }
+    } catch {
+      showToast('Network error. Please try again.', 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Subscribe';
+    }
+  });
+
+  console.log('🎓 Summer Academy School Punjab — Website loaded');
+  console.log('📡 API mode:', API_BASE === 'demo' ? 'DEMO (no server)' : 'LIVE (connected to Node.js backend)');
+</script>
+</body>
+</html>
